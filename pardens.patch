@@ -1,0 +1,11 @@
+--- pardens.F	2014-11-04 09:26:27.000000000 -0600
++++ pardens_new.F	2015-02-10 07:08:52.000000000 -0600
+@@ -1151,7 +1151,7 @@
+       OPEN(UNIT=iunit,FILE=filename,IOSTAT=ierr,STATUS="REPLACE")
+ 
+       ! and use the usual output routines
+-      CALL OUTPOS(iunit,.FALSE.,INFO%SZNAM1,T_INFO,LATT_CUR%SCALE,LATT_CUR%A,.FALSE.,DYN%POSION)
++!karol      CALL OUTPOS(iunit,.FALSE.,INFO%SZNAM1,T_INFO,LATT_CUR%SCALE,LATT_CUR%A,.FALSE.,DYN%POSION)  
+       io_end
+ 
+       CALL OUTCHG(GRIDC,iunit,.FALSE.,CHTOT)
