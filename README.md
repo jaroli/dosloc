@@ -25,7 +25,7 @@ based on work by [Kenneth Moreland](http://www.sandia.gov/~kmorel/documents/Colo
 
 # Usage
 First perform a self-consistent calculation to obtain a converged WAVECAR.
-Next we will generate PARCHG files for each band and k-point with the following INCAR 
+Next, generate PARCHG files for each band and k-point with the following INCAR 
 settings:
 ```
 LPARD    = .TRUE.
