@@ -51,4 +51,4 @@ The program does not understand symmetry so use ISYM=-1 in your INCAR.
 
 # Example
 Localized density of states of the crystalline/amorphous silicon interface.
-![silicon](./example/dosloc.eps)
+![silicon](./example/dosloc.png)
