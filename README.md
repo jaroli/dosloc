@@ -7,41 +7,41 @@ led to a slightly deformed DOS since delocalized states were underestimated. The
 present version also supports k-meshes.
 
 # Installation
-Just compile with `g++ -o dosloc dosloc.cc` and put the executable in your `bin` folder.
 
-In oder to use the program one has to mofify the VASP source code. 
+In oder to use the program one has to modify the VASP source code, with the provided
+patch files. To apply, copy the files to the `/src` folder of your VASP installation and type:
+```bash
+ patch < fileio.patch
+ patch < pardens.patch
+```
+Continue as you would normally compile VASP.
+The modified VASP will generate PARCHG files whre the charge density is summed
+along 'x' and 'y' directions and printed only along the 'z' direction.
 
-
-You will also need [Gnuplot](http://gnuplot.info) installed on your system.
+Finally, you will also need [Gnuplot](http://gnuplot.info) installed on your system.
 
 # Usage
+First perform a self-consistent calculation to obtain a converged WAVECAR.
+Next we will generate PARCHG files for each band and k-point with the following INCAR 
+settings:
+```
+LPARD    = .TRUE.
+NBMOD    = 0
+LSEPB    = .TRUE.
+LSEPK    = .TRUE.
+```
+After the calculations is finished do:
+```bash
+mkdir parchg_orig
+mv PARCHG* parchg_orig
+```
+Next one has to change the `dosloc.cc` file to update the cell parameters, position of the 
+inteface, number of bands and k-points.
 
-  -input: modified PARCHG files (summed in x & y direction) for all bands and k-points
-  -the PARCHG files are calculated by a modified VASP
+Next compile with `g++ -o dosloc dosloc.cc` and execute the program with `./dosloc`.
+The program will generate the file `dosloc-out`.
+As a final step run `gnuplot dosloc.plt` to generate the figure `dosloc.eps`.
+Gnuplot will require the `moreland.pal` file so that it can read the color pallete.
 
-  -the dos in a slice at a certain y position (and at a certain eigenvalue) is calculated as:
-   dos(y) = amount of charge in slice / volume of slice
-  -the amount of charge corresponds to the number of states (2 electrons = 2 states = 1 band)
-  -DOS units are 10^21 cm^-3 eV^-1
-
-  -for some reason the VASP uses sigma=0.036 when sigma=0.05 is specified in the INCAR
-
-  -we don't use symmetry, so all k-points have the same weight  
-
-  -the program was tested: 
-    -averaging the position-resolved DOS reproduces the total DOS
-    -gives the same result as doslab3 (complete supercell is selected)
-    -position-resolved DOS calculated with (Gamma+locdos2) and with (2x2x1 mesh + locdos3) looks similar
-
-  -if the output file (or the corresponding .eps file) is too large you can change the for loops
-   in the "write output" section to for (i = 0; i < nz; i=i+2)
-
-  -use these settings in your INCAR:
-   LPARD    = .TRUE.
-   NBMOD    = 0
-   LSEPB    = .TRUE.
-   LSEPK    = .TRUE.
-
-
-   
-
+# Limitations
+The program does not understand symmetry so use ISYM=-1 in your INCAR. 
