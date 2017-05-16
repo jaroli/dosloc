@@ -8,7 +8,7 @@
 using namespace std;
 
 
-double a        = 15.35440;
+double a        = 15.35440;	//cell dimensions
 double b	= 13.29732;
 double c        = 45.40261;
 double zsi	= 2*9.40260;	//position of interface
